@@ -28,3 +28,6 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
+[] ADD Exception architecture
+[] ADD DTO Validation
+[] Add Security Basic authentication (Bonus point OAuth2 Bearer Tokens for authentication)
