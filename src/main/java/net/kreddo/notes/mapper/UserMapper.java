@@ -2,7 +2,7 @@ package net.kreddo.notes.mapper;
 
 import java.util.List;
 import net.kreddo.notes.dto.UserDto;
-import net.kreddo.notes.model.User;
+import net.kreddo.notes.model.UserEntity;
 import org.mapstruct.Context;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.InjectionStrategy;
@@ -16,12 +16,12 @@ import org.mapstruct.ReportingPolicy;
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
     uses = NoteMapper.class)
 public interface UserMapper {
-  @Mapping(target = "id", source = "id")
-  UserDto toUserDto(User user, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  @Mapping(target = "password", ignore = true)
+  UserDto toUserDto(UserEntity userEntity, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
-  List<UserDto> toUserDtoList(List<User> users, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  List<UserDto> toUserDtoList(List<UserEntity> users, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
   @InheritInverseConfiguration
-  User toUser(UserDto userDto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  UserEntity toUser(UserDto userDto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
 }

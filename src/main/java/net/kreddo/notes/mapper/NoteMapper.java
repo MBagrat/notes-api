@@ -2,7 +2,7 @@ package net.kreddo.notes.mapper;
 
 import java.util.List;
 import net.kreddo.notes.dto.NoteDto;
-import net.kreddo.notes.model.Note;
+import net.kreddo.notes.model.NoteEntity;
 import org.mapstruct.Context;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.InjectionStrategy;
@@ -18,10 +18,10 @@ import org.mapstruct.ReportingPolicy;
 public interface NoteMapper {
 
   @Mapping(target = "id", source = "id")
-  NoteDto toNoteDto(Note note, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  NoteDto toNoteDto(NoteEntity noteEntity, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
-  List<NoteDto> toNoteDtoList(List<Note> notes, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  List<NoteDto> toNoteDtoList(List<NoteEntity> noteEntities, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
   @InheritInverseConfiguration
-  Note toNote(NoteDto noteDto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  NoteEntity toNote(NoteDto noteDto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 }

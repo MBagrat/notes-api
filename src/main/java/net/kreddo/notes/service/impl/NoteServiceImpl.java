@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.kreddo.notes.dto.NoteDto;
 import net.kreddo.notes.mapper.CycleAvoidingMappingContext;
 import net.kreddo.notes.mapper.NoteMapper;
-import net.kreddo.notes.model.Note;
+import net.kreddo.notes.model.NoteEntity;
 import net.kreddo.notes.repository.NoteRepository;
 import net.kreddo.notes.service.NoteService;
 import org.springframework.stereotype.Service;
@@ -41,10 +41,10 @@ public class NoteServiceImpl implements NoteService {
 
   @Override
   public NoteDto updateNote(Long id, NoteDto noteDto) {
-    Note noteModel = noteMapper.toNote(noteDto, cycleAvoidingMappingContext);
-    Note note = null;
+    NoteEntity existingNote = noteMapper.toNote(noteDto, cycleAvoidingMappingContext);
+    NoteEntity note = null;
     if (noteRepository.findById(id).isPresent()) {
-      note = noteRepository.save(noteModel);
+      note = noteRepository.save(existingNote);
     }
     return noteMapper.toNoteDto(note, cycleAvoidingMappingContext);
   }

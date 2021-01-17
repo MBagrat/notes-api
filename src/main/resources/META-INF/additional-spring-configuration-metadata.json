@@ -1,0 +1,38 @@
+{
+  "groups": [
+    {
+      "name": "notes-api",
+      "type": "net.kreddo.notes.config.NotesApiProperties",
+      "sourceType": "net.kreddo.notes.config.NotesApiProperties"
+    },
+    {
+      "name": "notes-api.jwt",
+      "type": "net.kreddo.notes.config.NotesApiProperties$Jwt",
+      "sourceType": "net.kreddo.notes.config.NotesApiProperties",
+      "sourceMethod": "public net.kreddo.notes.config.NotesApiProperties.Jwt getJwt() "
+    }
+  ],
+
+  "properties": [
+    {
+      "name": "notes-api.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "net.kreddo.notes.config.NotesApiProperties$Jwt"
+    },
+    {
+      "name": "notes-api.jwt.expiration-time",
+      "type": "java.lang.Long",
+      "sourceType": "net.kreddo.notes.config.NotesApiProperties$Jwt"
+    },
+    {
+      "name": "notes-api.jwt.token-prefix",
+      "type": "java.lang.String",
+      "sourceType": "net.kreddo.notes.config.NotesApiProperties$Jwt"
+    },
+    {
+      "name": "notes-api.jwt.header-text",
+      "type": "java.lang.String",
+      "sourceType": "net.kreddo.notes.config.NotesApiProperties$Jwt"
+    }
+  ]
+}

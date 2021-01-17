@@ -2,7 +2,6 @@ package net.kreddo.notes.service;
 
 import java.util.List;
 import net.kreddo.notes.dto.NoteDto;
-import org.springframework.stereotype.Service;
 
 public interface NoteService {
 

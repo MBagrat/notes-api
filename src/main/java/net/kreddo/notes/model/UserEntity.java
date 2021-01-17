@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
-public class User {
+public class UserEntity {
 
   @Id
   @Column(name = "id")
@@ -40,6 +40,6 @@ public class User {
   private LocalDateTime lastUpdateTime;
 
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-  private List<Note> notes;
+  private List<NoteEntity> notes;
 
 }

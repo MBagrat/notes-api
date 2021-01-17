@@ -13,3 +13,10 @@ spring:
     username: root
     password:
     driverClassName: com.mysql.cj.jdbc.Driver
+
+notes-api:
+  jwt:
+    secret: "NotesApiSecretKeyForJWTs"
+    expiration-time: 864000000 # 10 days
+    token-prefix: "Bearer "
+    header-text: "Authorization"

@@ -19,8 +19,8 @@ import net.kreddo.notes.dto.NoteDto;
 import net.kreddo.notes.dto.UserDto;
 import net.kreddo.notes.mapper.CycleAvoidingMappingContext;
 import net.kreddo.notes.mapper.NoteMapper;
-import net.kreddo.notes.model.Note;
-import net.kreddo.notes.model.User;
+import net.kreddo.notes.model.NoteEntity;
+import net.kreddo.notes.model.UserEntity;
 import net.kreddo.notes.repository.NoteRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,58 +47,58 @@ class NoteServiceImplTest {
   @InjectMocks
   private NoteServiceImpl noteService;
 
-  private Note note;
-  private Note noteOne;
-  private Note noteTwo;
+  private NoteEntity noteEntity;
+  private NoteEntity noteEntityOne;
+  private NoteEntity noteEntityTwo;
   private NoteDto noteDto;
-  private NoteDto noteOneDto;
-  private NoteDto noteTwoDto;
+  private NoteDto noteDtoOne;
+  private NoteDto noteDtoTwo;
 
   @BeforeEach
   void setUp() {
 
-    User user = new User();
-    user.setEmail("test@gmail.com");
-    user.setPassword("Pa$$word!1");
-    user.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    user.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    UserEntity userEntity = new UserEntity();
+    userEntity.setEmail("test@gmail.com");
+    userEntity.setPassword("Pa$$word!1");
+    userEntity.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    userEntity.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    note = new Note();
-    note.setTitle("Note one title");
-    note.setNote("Note One body");
-    note.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    note.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    note.setUser(user);
+    noteEntity = new NoteEntity();
+    noteEntity.setTitle("NoteEntity one title");
+    noteEntity.setNote("NoteEntity One body");
+    noteEntity.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteEntity.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteEntity.setUser(userEntity);
 
-    User userOne = new User();
-    userOne.setId(1L);
-    userOne.setEmail("test@gmail.com");
-    userOne.setPassword("Pa$$word!1");
-    userOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    userOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    UserEntity userEntityOne = new UserEntity();
+    userEntityOne.setId(1L);
+    userEntityOne.setEmail("test@gmail.com");
+    userEntityOne.setPassword("Pa$$word!1");
+    userEntityOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    userEntityOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    noteOne = new Note();
-    noteOne.setId(1L);
-    noteOne.setTitle("Note one title");
-    noteOne.setNote("Note one body");
-    noteOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteOne.setUser(userOne);
+    noteEntityOne = new NoteEntity();
+    noteEntityOne.setId(1L);
+    noteEntityOne.setTitle("NoteEntity one title");
+    noteEntityOne.setNote("NoteEntity one body");
+    noteEntityOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteEntityOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteEntityOne.setUser(userEntityOne);
 
-    User userTwo = new User();
-    userTwo.setId(2L);
-    userTwo.setEmail("test@gmail.com");
-    userTwo.setPassword("Pa$$word!1");
-    userTwo.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    userTwo.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    UserEntity userEntityTwo = new UserEntity();
+    userEntityTwo.setId(2L);
+    userEntityTwo.setEmail("test@gmail.com");
+    userEntityTwo.setPassword("Pa$$word!1");
+    userEntityTwo.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    userEntityTwo.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    noteTwo = new Note();
-    noteTwo.setId(2L);
-    noteTwo.setTitle("Note two title");
-    noteTwo.setNote("Note two body");
-    noteTwo.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteTwo.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteTwo.setUser(userTwo);
+    noteEntityTwo = new NoteEntity();
+    noteEntityTwo.setId(2L);
+    noteEntityTwo.setTitle("NoteEntity two title");
+    noteEntityTwo.setNote("NoteEntity two body");
+    noteEntityTwo.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteEntityTwo.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteEntityTwo.setUser(userEntityTwo);
 
     UserDto userDto = new UserDto();
     userDto.setEmail("test@gmail.com");
@@ -107,112 +107,113 @@ class NoteServiceImplTest {
     userDto.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
     noteDto = new NoteDto();
-    noteDto.setTitle("Note one title");
-    noteDto.setNote("Note one body");
+    noteDto.setTitle("NoteEntity one title");
+    noteDto.setNote("NoteEntity one body");
     noteDto.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteDto.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteDto.setUser(userDto);
 
-    UserDto userOneDto = new UserDto();
-    userOneDto.setId(1L);
-    userOneDto.setEmail("test@gmail.com");
-    userOneDto.setPassword("Pa$$word!1");
-    userOneDto.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    userOneDto.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    UserDto userDtoOne = new UserDto();
+    userDtoOne.setId(1L);
+    userDtoOne.setEmail("test@gmail.com");
+    userDtoOne.setPassword("Pa$$word!1");
+    userDtoOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    userDtoOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    noteOneDto = new NoteDto();
-    noteOneDto.setId(1L);
-    noteOneDto.setTitle("Note one title");
-    noteOneDto.setNote("Note one body");
-    noteOneDto.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteOneDto.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteOneDto.setUser(userOneDto);
+    noteDtoOne = new NoteDto();
+    noteDtoOne.setId(1L);
+    noteDtoOne.setTitle("NoteEntity one title");
+    noteDtoOne.setNote("NoteEntity one body");
+    noteDtoOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteDtoOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteDtoOne.setUser(userDtoOne);
 
-    UserDto userTwoDto = new UserDto();
-    userTwoDto.setId(2L);
-    userTwoDto.setEmail("test@gmail.com");
-    userTwoDto.setPassword("Pa$$word!1");
-    userTwoDto.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    userTwoDto.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    UserDto userDtoTwo = new UserDto();
+    userDtoTwo.setId(2L);
+    userDtoTwo.setEmail("test@gmail.com");
+    userDtoTwo.setPassword("Pa$$word!1");
+    userDtoTwo.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    userDtoTwo.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    noteTwoDto = new NoteDto();
-    noteTwoDto.setId(2L);
-    noteTwoDto.setTitle("Note two title");
-    noteTwoDto.setNote("Note two body");
-    noteTwoDto.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteTwoDto.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
-    noteTwoDto.setUser(userTwoDto);
+    noteDtoTwo = new NoteDto();
+    noteDtoTwo.setId(2L);
+    noteDtoTwo.setTitle("NoteEntity two title");
+    noteDtoTwo.setNote("NoteEntity two body");
+    noteDtoTwo.setCreateTime(LocalDateTime.parse("2017-06-13 08:56:22",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteDtoTwo.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
+    noteDtoTwo.setUser(userDtoTwo);
   }
 
   @Test
   void getAllNotes() {
-    when(noteRepository.findAll()).thenReturn(Lists.newArrayList(noteOne, noteTwo));
-    when(mapper.toNoteDtoList(Lists.newArrayList(noteOne, noteTwo), cycleAvoidingMappingContext)).thenReturn(Lists.newArrayList(noteOneDto, noteTwoDto));
+    when(noteRepository.findAll()).thenReturn(Lists.newArrayList(noteEntityOne, noteEntityTwo));
+    when(mapper.toNoteDtoList(Lists.newArrayList(noteEntityOne, noteEntityTwo), cycleAvoidingMappingContext)).thenReturn(Lists.newArrayList(
+        noteDtoOne, noteDtoTwo));
 
     List<NoteDto> actualAllNotes = noteService.getAllNotes();
 
     assertThat(actualAllNotes, hasSize(2));
-    assertThat(actualAllNotes.get(0), equalTo(noteOneDto));
-    assertThat(actualAllNotes.get(1), equalTo(noteTwoDto));
+    assertThat(actualAllNotes.get(0), equalTo(noteDtoOne));
+    assertThat(actualAllNotes.get(1), equalTo(noteDtoTwo));
 
     verify(noteRepository, atLeastOnce()).findAll();
-    verify(mapper, atLeastOnce()).toNoteDtoList(Lists.newArrayList(noteOne, noteTwo),
+    verify(mapper, atLeastOnce()).toNoteDtoList(Lists.newArrayList(noteEntityOne, noteEntityTwo),
         cycleAvoidingMappingContext);
   }
 
   @Test
   void getNote() {
 
-    when(noteRepository.findById(1L)).thenReturn(Optional.of(noteOne));
-    when(mapper.toNoteDto(noteOne, cycleAvoidingMappingContext)).thenReturn(noteOneDto);
+    when(noteRepository.findById(1L)).thenReturn(Optional.of(noteEntityOne));
+    when(mapper.toNoteDto(noteEntityOne, cycleAvoidingMappingContext)).thenReturn(noteDtoOne);
 
     NoteDto actualNote = noteService.getNote(1L);
 
     assertThat(actualNote, is(not(nullValue())));
-    assertThat(actualNote, equalTo(noteOneDto));
+    assertThat(actualNote, equalTo(noteDtoOne));
 
     verify(noteRepository, atLeastOnce()).findById(1L);
-    verify(mapper, atLeastOnce()).toNoteDto(noteOne, cycleAvoidingMappingContext);
+    verify(mapper, atLeastOnce()).toNoteDto(noteEntityOne, cycleAvoidingMappingContext);
   }
 
   @Test
   void addNote() {
 
-    when(mapper.toNote(noteDto, cycleAvoidingMappingContext)).thenReturn(note);
-    when(noteRepository.save(note)).thenReturn(noteTwo);
-    when(mapper.toNoteDto(noteTwo, cycleAvoidingMappingContext)).thenReturn(noteTwoDto);
+    when(mapper.toNote(noteDto, cycleAvoidingMappingContext)).thenReturn(noteEntity);
+    when(noteRepository.save(noteEntity)).thenReturn(noteEntityTwo);
+    when(mapper.toNoteDto(noteEntityTwo, cycleAvoidingMappingContext)).thenReturn(noteDtoTwo);
 
     NoteDto actualNote = noteService.addNote(noteDto);
 
     assertThat(actualNote, is(not(nullValue())));
-    assertThat(actualNote, equalTo(noteTwoDto));
+    assertThat(actualNote, equalTo(noteDtoTwo));
 
     verify(mapper, atLeastOnce()).toNote(noteDto, cycleAvoidingMappingContext);
-    verify(noteRepository, atLeastOnce()).save(note);
-    verify(mapper, atLeastOnce()).toNoteDto(noteTwo, cycleAvoidingMappingContext);
+    verify(noteRepository, atLeastOnce()).save(noteEntity);
+    verify(mapper, atLeastOnce()).toNoteDto(noteEntityTwo, cycleAvoidingMappingContext);
   }
 
   @Test
   void updateNote() {
 
-    noteOne.setTitle("Update Note one title");
-    noteOneDto.setTitle("Update Note one title");
+    noteEntityOne.setTitle("Update NoteEntity one title");
+    noteDtoOne.setTitle("Update NoteEntity one title");
 
-    when(mapper.toNote(noteOneDto, cycleAvoidingMappingContext)).thenReturn(noteOne);
-    when(noteRepository.findById(noteOne.getId())).thenReturn(Optional.of(noteOne));
-    when(noteRepository.save(noteOne)).thenReturn(noteOne);
-    when(mapper.toNoteDto(noteOne, cycleAvoidingMappingContext)).thenReturn(noteOneDto);
+    when(mapper.toNote(noteDtoOne, cycleAvoidingMappingContext)).thenReturn(noteEntityOne);
+    when(noteRepository.findById(noteEntityOne.getId())).thenReturn(Optional.of(noteEntityOne));
+    when(noteRepository.save(noteEntityOne)).thenReturn(noteEntityOne);
+    when(mapper.toNoteDto(noteEntityOne, cycleAvoidingMappingContext)).thenReturn(noteDtoOne);
 
-    NoteDto actualNote = noteService.updateNote(1L, noteOneDto);
+    NoteDto actualNote = noteService.updateNote(1L, noteDtoOne);
 
     assertThat(actualNote, is(not(nullValue())));
-    assertThat(actualNote, equalTo(noteOneDto));
-    assertThat(actualNote.getTitle(), is("Update Note one title"));
+    assertThat(actualNote, equalTo(noteDtoOne));
+    assertThat(actualNote.getTitle(), is("Update NoteEntity one title"));
 
-    verify(mapper, atLeastOnce()).toNote(noteOneDto, cycleAvoidingMappingContext);
+    verify(mapper, atLeastOnce()).toNote(noteDtoOne, cycleAvoidingMappingContext);
     verify(noteRepository, atLeastOnce()).findById(1L);
-    verify(noteRepository, atLeastOnce()).save(noteOne);
-    verify(mapper, atLeastOnce()).toNoteDto(noteOne, cycleAvoidingMappingContext);
+    verify(noteRepository, atLeastOnce()).save(noteEntityOne);
+    verify(mapper, atLeastOnce()).toNoteDto(noteEntityOne, cycleAvoidingMappingContext);
   }
 
   @Test
@@ -226,11 +227,11 @@ class NoteServiceImplTest {
 
   @Test
   void testDeleteNote() {
-    doNothing().when(noteRepository).delete(noteOne);
-    when(mapper.toNote(noteOneDto, cycleAvoidingMappingContext)).thenReturn(noteOne);
+    doNothing().when(noteRepository).delete(noteEntityOne);
+    when(mapper.toNote(noteDtoOne, cycleAvoidingMappingContext)).thenReturn(noteEntityOne);
 
-    noteService.deleteNote(noteOneDto);
+    noteService.deleteNote(noteDtoOne);
 
-    verify(noteRepository, atLeastOnce()).delete(noteOne);
+    verify(noteRepository, atLeastOnce()).delete(noteEntityOne);
   }
 }

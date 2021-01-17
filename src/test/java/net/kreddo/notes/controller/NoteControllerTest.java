@@ -7,6 +7,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -17,16 +19,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import net.kreddo.notes.config.NotesApiProperties;
 import net.kreddo.notes.dto.NoteDto;
 import net.kreddo.notes.dto.UserDto;
 import net.kreddo.notes.service.NoteService;
+import net.kreddo.notes.service.impl.UserDetailsServiceImpl;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(NoteController.class)
@@ -37,6 +45,12 @@ class NoteControllerTest {
 
   @Autowired
   private ObjectMapper mapper;
+
+  @MockBean
+  private UserDetailsServiceImpl userDetailsService;
+
+  @MockBean
+  private BCryptPasswordEncoder passwordEncoder;
 
   @MockBean
   private NoteService noteService;
@@ -100,7 +114,7 @@ class NoteControllerTest {
     when(noteService.getAllNotes()).thenReturn(Lists.newArrayList(noteOne, noteTwo));
 
     this.mockMvc
-        .perform(get("/notes/"))
+        .perform(get("/notes/").with(csrf()).with(jwt()))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$[*]", hasSize(2)))
@@ -124,7 +138,7 @@ class NoteControllerTest {
     when(noteService.getNote(1L)).thenReturn(noteOne);
 
     this.mockMvc
-        .perform(get("/notes/1"))
+        .perform(get("/notes/1").with(csrf()).with(jwt()))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("id", is(1)))
@@ -142,7 +156,7 @@ class NoteControllerTest {
     when(noteService.addNote(note)).thenReturn(noteOne);
 
     this.mockMvc
-        .perform(post("/notes/")
+        .perform(post("/notes/").with(csrf()).with(jwt())
             .contentType(MediaType.APPLICATION_JSON)
             .content(mapper.writeValueAsString(note)))
         .andDo(print())
@@ -171,7 +185,7 @@ class NoteControllerTest {
     when(noteService.updateNote(1L, noteOne)).thenReturn(note);
 
     this.mockMvc
-        .perform(patch("/notes/1")
+        .perform(patch("/notes/1").with(csrf()).with(jwt())
             .contentType(MediaType.APPLICATION_JSON)
             .content(mapper.writeValueAsString(noteOne)))
         .andDo(print())
@@ -190,7 +204,7 @@ class NoteControllerTest {
     doNothing().when(noteService).deleteNote(1L);
 
     this.mockMvc
-        .perform(delete("/notes/1"))
+        .perform(delete("/notes/1").with(csrf()).with(jwt()))
         .andDo(print())
         .andExpect(status().isOk());
 
@@ -202,12 +216,20 @@ class NoteControllerTest {
     doNothing().when(noteService).deleteNote(noteOne);
 
     this.mockMvc
-        .perform(delete("/notes/note")
+        .perform(delete("/notes/note").with(csrf()).with(jwt())
             .contentType(MediaType.APPLICATION_JSON)
             .content(mapper.writeValueAsString(noteOne)))
         .andDo(print())
         .andExpect(status().isOk());
 
     verify(noteService, atLeastOnce()).deleteNote(noteOne);
+  }
+
+  @TestConfiguration
+  static class TestConfig {
+    @Bean
+    public NotesApiProperties notesApiProperties(){
+      return new NotesApiProperties();
+    }
   }
 }

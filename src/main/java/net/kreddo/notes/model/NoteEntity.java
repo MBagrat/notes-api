@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "notes")
 @NoArgsConstructor
-public class Note {
+public class NoteEntity {
 
   @Id
   @Column(name = "id")
@@ -39,6 +39,7 @@ public class Note {
   private LocalDateTime lastUpdateTime;
 
   @ManyToOne
-  private User user;
+  @JoinColumn(name = "user_id")
+  private UserEntity user;
 
 }
