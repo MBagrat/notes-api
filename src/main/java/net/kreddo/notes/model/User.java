@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class User {
   @Column(name="last_update_time", columnDefinition = "TIMESTAMP")
   private LocalDateTime lastUpdateTime;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
   private List<Note> notes;
 
 }

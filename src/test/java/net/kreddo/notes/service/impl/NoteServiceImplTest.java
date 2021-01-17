@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import net.kreddo.notes.dto.NoteDto;
 import net.kreddo.notes.dto.UserDto;
+import net.kreddo.notes.mapper.CycleAvoidingMappingContext;
 import net.kreddo.notes.mapper.NoteMapper;
 import net.kreddo.notes.model.Note;
 import net.kreddo.notes.model.User;
@@ -39,6 +40,9 @@ class NoteServiceImplTest {
 
   @Spy
   private NoteMapper mapper;
+
+  @Spy
+  private CycleAvoidingMappingContext cycleAvoidingMappingContext;
 
   @InjectMocks
   private NoteServiceImpl noteService;
@@ -143,7 +147,7 @@ class NoteServiceImplTest {
   @Test
   void getAllNotes() {
     when(noteRepository.findAll()).thenReturn(Lists.newArrayList(noteOne, noteTwo));
-    when(mapper.toNoteDtoList(Lists.newArrayList(noteOne, noteTwo))).thenReturn(Lists.newArrayList(noteOneDto, noteTwoDto));
+    when(mapper.toNoteDtoList(Lists.newArrayList(noteOne, noteTwo), cycleAvoidingMappingContext)).thenReturn(Lists.newArrayList(noteOneDto, noteTwoDto));
 
     List<NoteDto> actualAllNotes = noteService.getAllNotes();
 
@@ -152,14 +156,15 @@ class NoteServiceImplTest {
     assertThat(actualAllNotes.get(1), equalTo(noteTwoDto));
 
     verify(noteRepository, atLeastOnce()).findAll();
-    verify(mapper, atLeastOnce()).toNoteDtoList(Lists.newArrayList(noteOne, noteTwo));
+    verify(mapper, atLeastOnce()).toNoteDtoList(Lists.newArrayList(noteOne, noteTwo),
+        cycleAvoidingMappingContext);
   }
 
   @Test
   void getNote() {
 
     when(noteRepository.findById(1L)).thenReturn(Optional.of(noteOne));
-    when(mapper.toNoteDto(noteOne)).thenReturn(noteOneDto);
+    when(mapper.toNoteDto(noteOne, cycleAvoidingMappingContext)).thenReturn(noteOneDto);
 
     NoteDto actualNote = noteService.getNote(1L);
 
@@ -167,24 +172,24 @@ class NoteServiceImplTest {
     assertThat(actualNote, equalTo(noteOneDto));
 
     verify(noteRepository, atLeastOnce()).findById(1L);
-    verify(mapper, atLeastOnce()).toNoteDto(noteOne);
+    verify(mapper, atLeastOnce()).toNoteDto(noteOne, cycleAvoidingMappingContext);
   }
 
   @Test
   void addNote() {
 
-    when(mapper.toNote(noteDto)).thenReturn(note);
+    when(mapper.toNote(noteDto, cycleAvoidingMappingContext)).thenReturn(note);
     when(noteRepository.save(note)).thenReturn(noteTwo);
-    when(mapper.toNoteDto(noteTwo)).thenReturn(noteTwoDto);
+    when(mapper.toNoteDto(noteTwo, cycleAvoidingMappingContext)).thenReturn(noteTwoDto);
 
     NoteDto actualNote = noteService.addNote(noteDto);
 
     assertThat(actualNote, is(not(nullValue())));
     assertThat(actualNote, equalTo(noteTwoDto));
 
-    verify(mapper, atLeastOnce()).toNote(noteDto);
+    verify(mapper, atLeastOnce()).toNote(noteDto, cycleAvoidingMappingContext);
     verify(noteRepository, atLeastOnce()).save(note);
-    verify(mapper, atLeastOnce()).toNoteDto(noteTwo);
+    verify(mapper, atLeastOnce()).toNoteDto(noteTwo, cycleAvoidingMappingContext);
   }
 
   @Test
@@ -193,10 +198,10 @@ class NoteServiceImplTest {
     noteOne.setTitle("Update Note one title");
     noteOneDto.setTitle("Update Note one title");
 
-    when(mapper.toNote(noteOneDto)).thenReturn(noteOne);
+    when(mapper.toNote(noteOneDto, cycleAvoidingMappingContext)).thenReturn(noteOne);
     when(noteRepository.findById(noteOne.getId())).thenReturn(Optional.of(noteOne));
     when(noteRepository.save(noteOne)).thenReturn(noteOne);
-    when(mapper.toNoteDto(noteOne)).thenReturn(noteOneDto);
+    when(mapper.toNoteDto(noteOne, cycleAvoidingMappingContext)).thenReturn(noteOneDto);
 
     NoteDto actualNote = noteService.updateNote(1L, noteOneDto);
 
@@ -204,10 +209,10 @@ class NoteServiceImplTest {
     assertThat(actualNote, equalTo(noteOneDto));
     assertThat(actualNote.getTitle(), is("Update Note one title"));
 
-    verify(mapper, atLeastOnce()).toNote(noteOneDto);
+    verify(mapper, atLeastOnce()).toNote(noteOneDto, cycleAvoidingMappingContext);
     verify(noteRepository, atLeastOnce()).findById(1L);
     verify(noteRepository, atLeastOnce()).save(noteOne);
-    verify(mapper, atLeastOnce()).toNoteDto(noteOne);
+    verify(mapper, atLeastOnce()).toNoteDto(noteOne, cycleAvoidingMappingContext);
   }
 
   @Test
@@ -222,7 +227,7 @@ class NoteServiceImplTest {
   @Test
   void testDeleteNote() {
     doNothing().when(noteRepository).delete(noteOne);
-    when(mapper.toNote(noteOneDto)).thenReturn(noteOne);
+    when(mapper.toNote(noteOneDto, cycleAvoidingMappingContext)).thenReturn(noteOne);
 
     noteService.deleteNote(noteOneDto);
 
