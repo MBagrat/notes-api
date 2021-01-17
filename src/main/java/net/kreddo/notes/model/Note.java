@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,10 +24,12 @@ public class Note {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "title", length = 50)
+  @Size(max = 50)
+  @Column(name = "title", nullable = false)
   private String title;
 
-  @Column(name="note", length = 1000)
+  @Size(max = 1000)
+  @Column(name="note")
   private String note;
 
   @Column(name="create_time", columnDefinition = "TIMESTAMP")
