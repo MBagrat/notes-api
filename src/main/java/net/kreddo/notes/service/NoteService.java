@@ -1,7 +1,7 @@
 package net.kreddo.notes.service;
 
 import java.util.List;
-import net.kreddo.notes.dto.NoteDto;
+import net.kreddo.notes.controller.dto.NoteDto;
 
 public interface NoteService {
 
@@ -11,7 +11,7 @@ public interface NoteService {
 
   NoteDto addNote(NoteDto noteDto);
 
-  NoteDto updateNote(Long id, NoteDto noteDto);
+  NoteDto updateNote(NoteDto noteDto);
 
   void deleteNote(Long id);
 

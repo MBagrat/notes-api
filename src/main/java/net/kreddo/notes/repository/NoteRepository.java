@@ -1,6 +1,6 @@
 package net.kreddo.notes.repository;
 
-import net.kreddo.notes.model.NoteEntity;
+import net.kreddo.notes.repository.model.NoteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

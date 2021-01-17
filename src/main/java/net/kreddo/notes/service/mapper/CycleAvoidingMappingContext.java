@@ -1,4 +1,4 @@
-package net.kreddo.notes.mapper;
+package net.kreddo.notes.service.mapper;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

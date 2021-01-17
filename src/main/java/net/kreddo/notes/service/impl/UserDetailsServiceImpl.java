@@ -4,7 +4,7 @@ package net.kreddo.notes.service.impl;
 import static java.util.Collections.emptyList;
 
 import lombok.RequiredArgsConstructor;
-import net.kreddo.notes.model.UserEntity;
+import net.kreddo.notes.repository.model.UserEntity;
 import net.kreddo.notes.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> {
+    var user = userRepository.findByEmail(email).orElseThrow(() -> {
       throw new UsernameNotFoundException(email);
     });
     return new User(user.getEmail(), user.getPassword(), emptyList());

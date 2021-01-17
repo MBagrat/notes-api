@@ -1,4 +1,4 @@
-package net.kreddo.notes.dto;
+package net.kreddo.notes.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

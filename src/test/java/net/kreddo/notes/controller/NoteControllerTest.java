@@ -20,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import net.kreddo.notes.config.NotesApiProperties;
-import net.kreddo.notes.dto.NoteDto;
-import net.kreddo.notes.dto.UserDto;
+import net.kreddo.notes.controller.dto.NoteDto;
+import net.kreddo.notes.controller.dto.UserDto;
 import net.kreddo.notes.service.NoteService;
 import net.kreddo.notes.service.impl.UserDetailsServiceImpl;
 import org.assertj.core.util.Lists;
@@ -34,7 +34,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(NoteController.class)
@@ -55,29 +54,26 @@ class NoteControllerTest {
   @MockBean
   private NoteService noteService;
 
-  private UserDto user;
-  private UserDto userOne;
-  private UserDto userTwo;
   private NoteDto note;
   private NoteDto noteOne;
   private NoteDto noteTwo;
 
   @BeforeEach
   void setUp() {
-    user = new UserDto();
+    var user = new UserDto();
     user.setEmail("test@gmail.com");
     user.setPassword("Pa$$word!1");
     user.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
     user.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    userOne = new UserDto();
+    var userOne = new UserDto();
     userOne.setId(1L);
     userOne.setEmail("test@gmail.com");
     userOne.setPassword("Pa$$word!1");
     userOne.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
     userOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    userTwo = new UserDto();
+    var userTwo = new UserDto();
     userTwo.setId(2L);
     userTwo.setEmail("test@gmail.com");
     userTwo.setPassword("Pa$$word!1");
@@ -182,7 +178,7 @@ class NoteControllerTest {
     note.setNote("Note one updated body");
     note.setLastUpdateTime(LocalDateTime.parse("2020-05-23 04:54:23",ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-    when(noteService.updateNote(1L, noteOne)).thenReturn(note);
+    when(noteService.updateNote(noteOne)).thenReturn(note);
 
     this.mockMvc
         .perform(patch("/notes/1").with(csrf()).with(jwt())
@@ -196,7 +192,7 @@ class NoteControllerTest {
         .andExpect(jsonPath("createTime", is(LocalDateTime.of(2015, 10, 23,3,34,40).format(ofPattern("yyyy-MM-dd'T'HH:mm:ss")))))
         .andExpect(jsonPath("lastUpdateTime", is(LocalDateTime.of(2020, 5, 23,4,54,23).format(ofPattern("yyyy-MM-dd'T'HH:mm:ss")))));
 
-    verify(noteService, atLeastOnce()).updateNote(1L, noteOne);
+    verify(noteService, atLeastOnce()).updateNote(noteOne);
   }
 
   @Test

@@ -2,7 +2,7 @@ package net.kreddo.notes.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import net.kreddo.notes.dto.NoteDto;
+import net.kreddo.notes.controller.dto.NoteDto;
 import net.kreddo.notes.service.NoteService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +37,8 @@ public class NoteController {
   }
 
   @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public NoteDto updateNote(@PathVariable("id") Long id, @RequestBody NoteDto noteDto) {
-    return noteService.updateNote(id, noteDto);
+  public NoteDto updateNote(@RequestBody NoteDto noteDto) {
+    return noteService.updateNote(noteDto);
   }
 
   @DeleteMapping("/{id}")

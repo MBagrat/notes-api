@@ -8,18 +8,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.kreddo.notes.config.NotesApiProperties;
-import net.kreddo.notes.dto.UserDto;
+import net.kreddo.notes.controller.dto.UserDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -33,7 +31,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   @Override
   public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
     try {
-      UserDto userDto = new ObjectMapper().readValue(req.getInputStream(), UserDto.class);
+      var userDto = new ObjectMapper().readValue(req.getInputStream(), UserDto.class);
 
       return authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword(), new ArrayList<>())

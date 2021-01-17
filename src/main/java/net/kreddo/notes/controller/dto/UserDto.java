@@ -1,4 +1,4 @@
-package net.kreddo.notes.dto;
+package net.kreddo.notes.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
-import net.kreddo.notes.model.NoteEntity;
+import net.kreddo.notes.repository.model.NoteEntity;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

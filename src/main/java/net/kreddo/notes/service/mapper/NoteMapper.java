@@ -1,8 +1,8 @@
-package net.kreddo.notes.mapper;
+package net.kreddo.notes.service.mapper;
 
 import java.util.List;
-import net.kreddo.notes.dto.NoteDto;
-import net.kreddo.notes.model.NoteEntity;
+import net.kreddo.notes.controller.dto.NoteDto;
+import net.kreddo.notes.repository.model.NoteEntity;
 import org.mapstruct.Context;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.InjectionStrategy;

@@ -51,7 +51,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
   private Optional<UsernamePasswordAuthenticationToken> getAuthenticationToken(HttpServletRequest request, NotesApiProperties notesApiProperties) {
     Optional<UsernamePasswordAuthenticationToken> authenticationToken = Optional.empty();
-    AtomicReference<String> user = new AtomicReference<>();
+    var user = new AtomicReference<>();
     Optional.ofNullable(request.getHeader(notesApiProperties.getJwt().getHeaderText())).ifPresent(s ->
         user.set(JWT.require(Algorithm.HMAC512(notesApiProperties.getJwt().getSecret().getBytes())).build()
             .verify(s.replace(notesApiProperties.getJwt().getTokenPrefix(), ""))

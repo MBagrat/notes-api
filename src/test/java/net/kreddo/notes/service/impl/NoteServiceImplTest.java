@@ -15,12 +15,12 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import net.kreddo.notes.dto.NoteDto;
-import net.kreddo.notes.dto.UserDto;
-import net.kreddo.notes.mapper.CycleAvoidingMappingContext;
-import net.kreddo.notes.mapper.NoteMapper;
-import net.kreddo.notes.model.NoteEntity;
-import net.kreddo.notes.model.UserEntity;
+import net.kreddo.notes.controller.dto.NoteDto;
+import net.kreddo.notes.controller.dto.UserDto;
+import net.kreddo.notes.service.mapper.CycleAvoidingMappingContext;
+import net.kreddo.notes.service.mapper.NoteMapper;
+import net.kreddo.notes.repository.model.NoteEntity;
+import net.kreddo.notes.repository.model.UserEntity;
 import net.kreddo.notes.repository.NoteRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +57,7 @@ class NoteServiceImplTest {
   @BeforeEach
   void setUp() {
 
-    UserEntity userEntity = new UserEntity();
+    var userEntity = new UserEntity();
     userEntity.setEmail("test@gmail.com");
     userEntity.setPassword("Pa$$word!1");
     userEntity.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -70,7 +70,7 @@ class NoteServiceImplTest {
     noteEntity.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteEntity.setUser(userEntity);
 
-    UserEntity userEntityOne = new UserEntity();
+    var userEntityOne = new UserEntity();
     userEntityOne.setId(1L);
     userEntityOne.setEmail("test@gmail.com");
     userEntityOne.setPassword("Pa$$word!1");
@@ -85,7 +85,7 @@ class NoteServiceImplTest {
     noteEntityOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteEntityOne.setUser(userEntityOne);
 
-    UserEntity userEntityTwo = new UserEntity();
+    var userEntityTwo = new UserEntity();
     userEntityTwo.setId(2L);
     userEntityTwo.setEmail("test@gmail.com");
     userEntityTwo.setPassword("Pa$$word!1");
@@ -100,7 +100,7 @@ class NoteServiceImplTest {
     noteEntityTwo.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteEntityTwo.setUser(userEntityTwo);
 
-    UserDto userDto = new UserDto();
+    var userDto = new UserDto();
     userDto.setEmail("test@gmail.com");
     userDto.setPassword("Pa$$word!1");
     userDto.setCreateTime(LocalDateTime.parse("2015-10-23 03:34:40",ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -113,7 +113,7 @@ class NoteServiceImplTest {
     noteDto.setLastUpdateTime(LocalDateTime.parse("2020-10-08 13:05:43",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteDto.setUser(userDto);
 
-    UserDto userDtoOne = new UserDto();
+    var userDtoOne = new UserDto();
     userDtoOne.setId(1L);
     userDtoOne.setEmail("test@gmail.com");
     userDtoOne.setPassword("Pa$$word!1");
@@ -128,7 +128,7 @@ class NoteServiceImplTest {
     noteDtoOne.setLastUpdateTime(LocalDateTime.parse("2020-03-18 05:18:32",ofPattern("yyyy-MM-dd HH:mm:ss")));
     noteDtoOne.setUser(userDtoOne);
 
-    UserDto userDtoTwo = new UserDto();
+    var userDtoTwo = new UserDto();
     userDtoTwo.setId(2L);
     userDtoTwo.setEmail("test@gmail.com");
     userDtoTwo.setPassword("Pa$$word!1");
@@ -150,7 +150,7 @@ class NoteServiceImplTest {
     when(mapper.toNoteDtoList(Lists.newArrayList(noteEntityOne, noteEntityTwo), cycleAvoidingMappingContext)).thenReturn(Lists.newArrayList(
         noteDtoOne, noteDtoTwo));
 
-    List<NoteDto> actualAllNotes = noteService.getAllNotes();
+    var actualAllNotes = noteService.getAllNotes();
 
     assertThat(actualAllNotes, hasSize(2));
     assertThat(actualAllNotes.get(0), equalTo(noteDtoOne));
@@ -167,7 +167,7 @@ class NoteServiceImplTest {
     when(noteRepository.findById(1L)).thenReturn(Optional.of(noteEntityOne));
     when(mapper.toNoteDto(noteEntityOne, cycleAvoidingMappingContext)).thenReturn(noteDtoOne);
 
-    NoteDto actualNote = noteService.getNote(1L);
+    var actualNote = noteService.getNote(1L);
 
     assertThat(actualNote, is(not(nullValue())));
     assertThat(actualNote, equalTo(noteDtoOne));
@@ -183,7 +183,7 @@ class NoteServiceImplTest {
     when(noteRepository.save(noteEntity)).thenReturn(noteEntityTwo);
     when(mapper.toNoteDto(noteEntityTwo, cycleAvoidingMappingContext)).thenReturn(noteDtoTwo);
 
-    NoteDto actualNote = noteService.addNote(noteDto);
+    var actualNote = noteService.addNote(noteDto);
 
     assertThat(actualNote, is(not(nullValue())));
     assertThat(actualNote, equalTo(noteDtoTwo));
@@ -204,7 +204,7 @@ class NoteServiceImplTest {
     when(noteRepository.save(noteEntityOne)).thenReturn(noteEntityOne);
     when(mapper.toNoteDto(noteEntityOne, cycleAvoidingMappingContext)).thenReturn(noteDtoOne);
 
-    NoteDto actualNote = noteService.updateNote(1L, noteDtoOne);
+    var actualNote = noteService.updateNote(noteDtoOne);
 
     assertThat(actualNote, is(not(nullValue())));
     assertThat(actualNote, equalTo(noteDtoOne));

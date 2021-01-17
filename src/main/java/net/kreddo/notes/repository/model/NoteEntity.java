@@ -1,4 +1,4 @@
-package net.kreddo.notes.model;
+package net.kreddo.notes.repository.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
