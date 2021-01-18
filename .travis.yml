@@ -1,4 +1,4 @@
-sudo: enabled
+dist: xenial
 branches:
   only:
     - main
@@ -6,6 +6,8 @@ matrix:
   include:
     language: java
     jdk: oraclejdk11
+    services:
+      - mysql
     before_cache:
       - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
       - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -13,5 +15,7 @@ matrix:
       directories:
         - $HOME/.gradle/caches/
         - $HOME/.gradle/wrapper/
+    before_script:
+      - mysql -e 'create database notes;'
     script:
       - "./gradlew check --stacktrace"
