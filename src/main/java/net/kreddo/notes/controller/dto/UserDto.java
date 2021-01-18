@@ -8,7 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import lombok.Data;
+import net.kreddo.notes.controller.validation.ValidPassword;
 import net.kreddo.notes.repository.model.NoteEntity;
 
 @Data
@@ -18,10 +21,14 @@ public class UserDto implements Serializable {
   @JsonProperty
   private Long id;
 
+  @Email(message = "Please provide a valid email address")
+  @NotEmpty(message = "E-mail address can't be empty")
   @JsonProperty(value = "username")
   private String email;
 
   @JsonProperty
+  @ValidPassword
+  @NotEmpty(message = "Password can't be empty.")
   @JsonInclude(Include.NON_NULL)
   private String password;
 

@@ -4,11 +4,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kreddo.notes.controller.dto.NoteDto;
+import net.kreddo.notes.repository.NoteRepository;
+import net.kreddo.notes.repository.model.NoteEntity;
+import net.kreddo.notes.service.NoteService;
 import net.kreddo.notes.service.mapper.CycleAvoidingMappingContext;
 import net.kreddo.notes.service.mapper.NoteMapper;
-import net.kreddo.notes.repository.model.NoteEntity;
-import net.kreddo.notes.repository.NoteRepository;
-import net.kreddo.notes.service.NoteService;
 import org.springframework.stereotype.Service;
 
 @Slf4j

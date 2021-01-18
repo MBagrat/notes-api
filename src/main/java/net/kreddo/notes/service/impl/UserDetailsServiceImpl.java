@@ -4,7 +4,6 @@ package net.kreddo.notes.service.impl;
 import static java.util.Collections.emptyList;
 
 import lombok.RequiredArgsConstructor;
-import net.kreddo.notes.repository.model.UserEntity;
 import net.kreddo.notes.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

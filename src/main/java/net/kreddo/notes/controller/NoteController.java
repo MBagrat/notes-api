@@ -1,6 +1,7 @@
 package net.kreddo.notes.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import net.kreddo.notes.controller.dto.NoteDto;
 import net.kreddo.notes.service.NoteService;
@@ -32,12 +33,12 @@ public class NoteController {
   }
 
   @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public NoteDto addNote(@RequestBody NoteDto noteDto) {
+  public NoteDto addNote(@RequestBody @Valid NoteDto noteDto) {
     return noteService.addNote(noteDto);
   }
 
   @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public NoteDto updateNote(@RequestBody NoteDto noteDto) {
+  public NoteDto updateNote(@RequestBody @Valid NoteDto noteDto) {
     return noteService.updateNote(noteDto);
   }
 
@@ -47,7 +48,7 @@ public class NoteController {
   }
 
   @DeleteMapping("/note")
-  public void deleteNote(@RequestBody NoteDto noteDto) {
+  public void deleteNote(@RequestBody @Valid NoteDto noteDto) {
     noteService.deleteNote(noteDto);
   }
 
