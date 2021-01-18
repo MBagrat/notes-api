@@ -156,7 +156,7 @@ class NoteControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(mapper.writeValueAsString(note)))
         .andDo(print())
-        .andExpect(status().isOk())
+        .andExpect(status().isCreated())
         .andExpect(jsonPath("id", is(1)))
         .andExpect(jsonPath("title", is("Note one title")))
         .andExpect(jsonPath("note", is("Note one body")))

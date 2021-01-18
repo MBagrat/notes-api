@@ -218,20 +218,24 @@ class NoteServiceImplTest {
 
   @Test
   void deleteNote() {
+    when(noteRepository.findById(1L)).thenReturn(Optional.of(noteEntityOne));
     doNothing().when(noteRepository).deleteById(1L);
 
     noteService.deleteNote(1L);
 
+    verify(noteRepository, atLeastOnce()).findById(1L);
     verify(noteRepository, atLeastOnce()).deleteById(1L);
   }
 
   @Test
   void testDeleteNote() {
     doNothing().when(noteRepository).delete(noteEntityOne);
+    when(noteRepository.findById(1L)).thenReturn(Optional.of(noteEntityOne));
     when(mapper.toNote(noteDtoOne, cycleAvoidingMappingContext)).thenReturn(noteEntityOne);
 
     noteService.deleteNote(noteDtoOne);
 
+    verify(noteRepository, atLeastOnce()).findById(1L);
     verify(noteRepository, atLeastOnce()).delete(noteEntityOne);
   }
 }

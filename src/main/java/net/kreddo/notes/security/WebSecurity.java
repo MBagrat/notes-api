@@ -23,7 +23,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-//        .csrf().disable()
+        .csrf().disable()
         .cors()
       .and()
         .authorizeRequests()

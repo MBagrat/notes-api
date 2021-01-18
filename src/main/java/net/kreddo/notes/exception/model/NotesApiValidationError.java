@@ -1,0 +1,20 @@
+package net.kreddo.notes.exception.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+class NotesApiValidationError extends NotesApiSubError {
+  private String object;
+  private String field;
+  private Object rejectedValue;
+  private String message;
+
+  NotesApiValidationError(String object, String message) {
+    this.object = object;
+    this.message = message;
+  }
+}

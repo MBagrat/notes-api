@@ -14,6 +14,10 @@ spring:
     password:
     driverClassName: com.mysql.cj.jdbc.Driver
 
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
 notes-api:
   jwt:
     secret: "NotesApiSecretKeyForJWTs"
