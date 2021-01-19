@@ -1,0 +1,58 @@
+version: '3.3'
+
+services:
+  #service 1: definition of mysql database
+  db:
+    image: mysql:8.0.22
+    container_name: notes-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Pa$$word!1
+      - MYSQL_DATABASE=notes
+      - MYSQL_USER=notesapi
+      - MYSQL_PASSWORD=notesapi!1
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./src/main/resources/sql:/docker-entrypoint-initdb.d
+    cap_add:
+      - SYS_NICE
+    networks:
+      - notes-api
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: notes-php-myadmin
+    ports:
+      - "8082:80"
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_USERNAME: notesapi
+      SPRING_DATASOURCE_PASSWORD: notesapi!1
+    networks:
+      - notes-api
+
+  #service 3: definition of your spring-boot app
+  notes:
+    image: notes
+    container_name: notes-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8080"
+    restart: always
+
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://notes-mysql:3306/notes?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: notesapi
+      SPRING_DATASOURCE_PASSWORD: notesapi!1
+    networks:
+      - notes-api
+
+networks:
+  notes-api:

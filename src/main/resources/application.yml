@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: dev
+
   jpa:
     database: MYSQL
     hibernate:
@@ -7,20 +10,39 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
 
-  datasource:
-    platform: mysql
-    url: jdbc:mysql://localhost:3306/notes?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password:
-    driverClassName: com.mysql.cj.jdbc.Driver
-
-#logging:
-#  level:
-#    org.springframework.security: DEBUG
-
 notes-api:
   jwt:
     secret: "NotesApiSecretKeyForJWTs"
     expiration-time: 864000000 # 10 days
     token-prefix: "Bearer "
     header-text: "Authorization"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/notes?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://notes-mysql:3306/notes?createDatabaseIfNotExist=true
+    username: notesapi
+    password: notesapi!1
+    driverClassName: com.mysql.cj.jdbc.Driver
