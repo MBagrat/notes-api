@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://travis-ci.com/mbagrat/notes-api"><img src="https://img.shields.io/travis/mbagrat/notes-api/main.svg?logo=travis" alt="Travis CI"/></a>
-    <a href="https://codecov.io/gh/jonathanlermitage/manon/branch/spring5-light"><img src="https://codecov.io/gh/jonathanlermitage/manon/branch/spring5-light/graph/badge.svg" alt="Codecov"/></a>
+    <a href="https://codecov.io/gh/mbagrat/notes-api/branch/main"><img src="https://codecov.io/gh/jonathanlermitage/manon/branch/spring5-light/graph/badge.svg" alt="Codecov"/></a>
 </p>
 
 ### Before running project
