@@ -22,6 +22,8 @@ cache:
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS notes;'
 script:
-  - "./gradlew check --stacktrace"
+  - ./gradlew check
+  - ./gradlew install -x check
+  - ./gradlew codeCoverageReport --continue
 after_success:
   bash <(curl -s https://codecov.io/bash)

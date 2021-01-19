@@ -6,6 +6,7 @@ plugins {
 }
 
 apply plugin: 'net.ltgt.apt-idea'
+apply plugin: 'jacoco'
 
 group = 'net.kreddo'
 version = '0.0.1-SNAPSHOT'
@@ -68,4 +69,17 @@ compileJava {
 test {
     systemProperty 'spring.profiles.active', 'travis'
     useJUnitPlatform()
+}
+
+task codeCoverageReport(type: JacocoReport, dependsOn: test) {
+    getExecutionData().setFrom(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+    getSourceDirectories().setFrom(files(sourceSets.main.allSource.srcDirs))
+    getClassDirectories().setFrom(files(sourceSets.main.output))
+
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco-html")
+    }
 }
