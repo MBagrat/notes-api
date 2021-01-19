@@ -66,5 +66,6 @@ compileJava {
 }
 
 test {
+    systemProperty 'spring.profiles.active', 'travis'
     useJUnitPlatform()
 }

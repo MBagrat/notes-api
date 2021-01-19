@@ -46,3 +46,16 @@ spring:
     username: notesapi
     password: notesapi!1
     driverClassName: com.mysql.cj.jdbc.Driver
+
+---
+spring:
+  config:
+    activate:
+      on-profile: travis
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/notes?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password:
+    driverClassName: com.mysql.cj.jdbc.Driver
